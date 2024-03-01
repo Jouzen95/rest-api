@@ -12,7 +12,7 @@ public class HomeWorkTests {
     void registerSuccessful () {
         String authData = "{ \"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\" }";
 
-        given()
+                given()
                 .log().all()
                 .contentType(JSON)
                 .body(authData)
@@ -28,7 +28,7 @@ public class HomeWorkTests {
     void userCreate () {
         String authData = "{ \"name\": \"morpheus\", \"job\": \"leader\" }";
 
-        given()
+                given()
                 .log().all()
                 .contentType(JSON)
                 .body(authData)
@@ -38,5 +38,20 @@ public class HomeWorkTests {
                 .log().all()
                 .statusCode(201)
                 .body("name", is("morpheus"), "job", is("leader"));
+    }
+
+    @Test
+    void loginUnsuccessful () {
+        String authData = "{ \"email\": \"peter@klaven\"}";
+                given()
+                        .log().all()
+                        .contentType(JSON)
+                        .body(authData)
+                        .when()
+                        .post("https://reqres.in/api/login")
+                        .then()
+                        .log().all()
+                        .statusCode(400)
+                        .body("error", is("Missing password"));
     }
 }
