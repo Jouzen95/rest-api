@@ -29,8 +29,9 @@ public class HomeWorkTests {
                 .extract().as(RegisterResponseModel.class);
 
         assertEquals(4, registerResponse.getId());
+        assertEquals("QpwL5tke4Pnpja7X4", registerResponse.getToken());
 
-//                .body("token", is("QpwL5tke4Pnpja7X4"))
+
     }
 
     @Test
