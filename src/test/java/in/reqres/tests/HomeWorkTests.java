@@ -1,7 +1,9 @@
 package in.reqres.tests;
 
-import in.reqres.models.RegisterBodyModel;
-import in.reqres.models.RegisterResponseModel;
+import in.reqres.models.RegisterBodyLombokModel;
+import in.reqres.models.RegisterBodyPojoModel;
+import in.reqres.models.RegisterResponseLombokModel;
+import in.reqres.models.RegisterResponsePojoModel;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -13,11 +15,11 @@ public class HomeWorkTests {
 
     @Test
     void registerSuccessful () {
-        RegisterBodyModel authData = new RegisterBodyModel();
+        RegisterBodyPojoModel authData = new RegisterBodyPojoModel();
         authData.setEmail("eve.holt@reqres.in");
         authData.setPassword("pistol");
 
-        RegisterResponseModel registerResponse = given()
+        RegisterResponsePojoModel registerResponse = given()
                 .log().all()
                 .contentType(JSON)
                 .body(authData)
@@ -26,14 +28,35 @@ public class HomeWorkTests {
                 .then()
                 .log().all()
                 .statusCode(200)
-                .extract().as(RegisterResponseModel.class);
+                .extract().as(RegisterResponsePojoModel.class);
 
         assertEquals(4, registerResponse.getId());
         assertEquals("QpwL5tke4Pnpja7X4", registerResponse.getToken());
 
 
     }
+    @Test
+    void registerLombokSuccessful () {
+        RegisterBodyLombokModel authData = new RegisterBodyLombokModel();
+        authData.setEmail("eve.holt@reqres.in");
+        authData.setPassword("pistol");
 
+        RegisterResponseLombokModel registerResponse = given()
+                .log().all()
+                .contentType(JSON)
+                .body(authData)
+                .when()
+                .post("https://reqres.in/api/register")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract().as(RegisterResponseLombokModel.class);
+
+        assertEquals(4, registerResponse.getId());
+        assertEquals("QpwL5tke4Pnpja7X4", registerResponse.getToken());
+
+
+    }
     @Test
     void userCreate () {
         String authData = "{ \"name\": \"morpheus\", \"job\": \"leader\" }";

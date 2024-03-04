@@ -1,6 +1,6 @@
 package in.reqres.models;
 
-public class RegisterResponseModel {
+public class RegisterResponsePojoModel {
     public String getToken() {
         return token;
     }

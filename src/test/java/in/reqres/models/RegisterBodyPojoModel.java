@@ -1,6 +1,6 @@
 package in.reqres.models;
 
-public class RegisterBodyModel {
+public class RegisterBodyPojoModel {
     String email,password;
 
     public String getEmail() {
